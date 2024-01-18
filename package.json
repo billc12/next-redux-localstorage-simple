@@ -1,6 +1,6 @@
 {
   "name": "redux-localstorage-simple-next",
-  "version": "2.5.2",
+  "version": "2.5.3",
   "description": "Save and load Redux state to and from LocalStorage.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
