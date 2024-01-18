@@ -2,8 +2,8 @@
 
 import merge from 'merge'
 
-const MODULE_NAME = '[Redux-LocalStorage-Simple]'
-const NAMESPACE_DEFAULT = 'redux_localstorage_simple'
+const MODULE_NAME = '[Next-Redux-LocalStorage-Simple]'
+const NAMESPACE_DEFAULT = 'next-redux_localstorage_simple'
 const NAMESPACE_SEPARATOR_DEFAULT = '_'
 const STATES_DEFAULT = []
 const IGNORE_STATES_DEFAULT = []
@@ -115,6 +115,10 @@ function realiseObject (objectPath, objectInitialValue = {}) {
 // SafeLocalStorage wrapper to handle the minefield of exceptions
 // that localStorage can throw. JSON.parse() is handled here as well.
 
+function isBrowser() {
+  return typeof localStorage === 'object'
+}
+
 function SafeLocalStorage (warnFn) {
   this.warnFn = warnFn || warnConsole
 }
@@ -122,7 +126,7 @@ function SafeLocalStorage (warnFn) {
 Object.defineProperty(SafeLocalStorage.prototype, 'length', {
   get: function length () {
     try {
-      return localStorage.length
+      return isBrowser() ? localStorage.length : 0
     } catch (err) {
       this.warnFn(err)
     }
@@ -134,7 +138,7 @@ Object.defineProperty(SafeLocalStorage.prototype, 'length', {
 
 SafeLocalStorage.prototype.key = function key (ind) {
   try {
-    return localStorage.key(ind)
+    return isBrowser() ?  localStorage.key(ind) : null
   } catch (err) {
     this.warnFn(err)
   }
@@ -143,7 +147,7 @@ SafeLocalStorage.prototype.key = function key (ind) {
 
 SafeLocalStorage.prototype.setItem = function setItem (key, val) {
   try {
-    localStorage.setItem(key, JSON.stringify(val))
+    isBrowser() && localStorage.setItem(key, JSON.stringify(val))
   } catch (err) {
     this.warnFn(err)
   }
@@ -151,7 +155,7 @@ SafeLocalStorage.prototype.setItem = function setItem (key, val) {
 
 SafeLocalStorage.prototype.getItem = function getItem (key) {
   try {
-    return JSON.parse(localStorage.getItem(key))
+    return isBrowser() ? JSON.parse(localStorage.getItem(key)) : null
   } catch (err) {
     this.warnFn(err)
   }
@@ -160,7 +164,7 @@ SafeLocalStorage.prototype.getItem = function getItem (key) {
 
 SafeLocalStorage.prototype.removeItem = function removeItem (key) {
   try {
-    localStorage.removeItem(key)
+    isBrowser() && localStorage.removeItem(key)
   } catch (err) {
     this.warnFn(err)
   }
@@ -290,8 +294,8 @@ export function save ({
         states + namespace,
         setTimeout(function () {
           _save(states, namespace)
-        }, debounce)        
-      ) 
+        }, debounce)
+      )
     // No debouncing necessary so save to LocalStorage right now
     } else {
       _save(states, namespace)

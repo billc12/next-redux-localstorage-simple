@@ -1,7 +1,6 @@
 import {Middleware} from "redux";
-import * as m from 'redux-localstorage-simple';
 
-declare module 'redux-localstorage-simple' {
+declare module 'next-redux-localstorage-simple' {
   interface RLSOptions {
     states?: string[];
     ignoreStates?: string[];
