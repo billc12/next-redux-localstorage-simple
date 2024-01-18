@@ -1,5 +1,5 @@
 {
-  "name": "redux-localstorage-simple",
+  "name": "next-redux-localstorage-simple",
   "version": "2.5.1",
   "description": "Save and load Redux state to and from LocalStorage.",
   "main": "dist/index.js",
@@ -10,21 +10,12 @@
     "build:dist": "npm run clean && babel src -d dist",
     "build:test": "webpack --config test/webpack.config.test.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kilkelly/redux-localstorage-simple.git"
-  },
   "keywords": [
     "redux",
     "localstorage",
     "immutablejs"
   ],
-  "author": "Frank Kilkelly",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/kilkelly/redux-localstorage-simple/issues"
-  },
-  "homepage": "https://github.com/kilkelly/redux-localstorage-simple#readme",
   "dependencies": {
     "merge": "2.1.1"
   },
